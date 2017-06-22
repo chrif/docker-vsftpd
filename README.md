@@ -62,7 +62,7 @@ Multiuser
 ----
 
 The main enhancement over fauria is the easy of user in supporting multiuser environments. This image loads a local directory which allows you to specify users in a config-file
-based approach. Place a file called `user` in a directory of your choosing and execute the following to load
+based approach. Place a file called `users` in a directory of your choosing and execute the following to load
 the config into the image:
 
 ```
