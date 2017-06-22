@@ -1,8 +1,6 @@
-# fauria/vsftpd
+# brakthehack/vsftpd
 
-![docker_logo](https://raw.githubusercontent.com/fauria/docker-vsftpd/master/docker_139x115.png)![docker_fauria_logo](https://raw.githubusercontent.com/fauria/docker-vsftpd/master/docker_fauria_161x115.png)
-
-[![](https://images.microbadger.com/badges/image/fauria/vsftpd.svg)](https://microbadger.com/images/fauria/vsftpd "Get your own image badge on microbadger.com")
+Fork of fauria/vsftpd. Offers some better usage in multiuser virtual environments.
 
 This Docker container implements a vsftpd server, with the following features:
 
@@ -12,31 +10,15 @@ This Docker container implements a vsftpd server, with the following features:
  * Passive mode
  * Logging to a file or STDOUT.
 
-### Installation from [Docker registry hub](https://registry.hub.docker.com/u/fauria/vsftpd/).
+### Installation from [Docker registry hub](https://registry.hub.docker.com/u/brakthehack/vsftpd/).
 
 You can download the image with the following command:
 
 ```bash
-docker pull fauria/vsftpd
+docker pull brakthehack/vsftpd
 ```
 
 Environment variables
-----
-
-This image uses environment variables to allow the configuration of some parameteres at run time:
-
-* Variable name: `FTP_USER`
-* Default value: admin
-* Accepted values: Any string. Avoid whitespaces and special chars.
-* Description: Username for the default FTP account. If you don't specify it through the `FTP_USER` environment variable at run time, `admin` will be used by default.
-
-----
-
-* Variable name: `FTP_PASS`
-* Default value: Random string.
-* Accepted values: Any string.
-* Description: If you don't specify a password for the default FTP account through `FTP_PASS`, a 16 characters random string will be automatically generated. You can obtain this value through the [container logs](https://docs.docker.com/reference/commandline/logs/).
-
 ----
 
 * Variable name: `PASV_ADDRESS`
@@ -74,19 +56,45 @@ The image exposes ports `20` and `21`. Also, exports two volumes: `/home/vsftpd`
 
 When sharing a homes directory between the host and the container (`/home/vsftpd`) the owner user id and group id should be 14 and 80 respectively. This correspond ftp user and ftp group on the container, but may match something else on the host.
 
+----
+
+Multiuser
+----
+
+The main enhancement over fauria is the easy of user in supporting multiuser environments. This image loads a local directory which allows you to specify users in a config-file
+based approach. Place a file called `user` in a directory of your choosing and execute the following to load
+the config into the image:
+
+```
+docker run -it -v /tmp/custom_dir:/home/custom_dir \
+               -v ~/Code/docker-vsftpd/users:/etc/vsftpd/virtual_users \
+               -p 20000:20 -p 21000:21 -p 21100-21110:21100-21110 \
+               -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 -e PASV_ADDRESS=127.0.0.1 \
+               $1
+```
+
+The users file takes the form:
+
+```
+ftpuser
+my_password
+ftpuser2
+my_password2
+```
+
 Use cases
 ----
 
 1) Create a temporary container for testing purposes:
 
 ```bash
-  docker run --rm fauria/vsftp
+  docker run --rm brakthehack/vsftp
 ```
 
 2) Create a container in active mode using the default user account, with a binded data directory:
 
 ```bash
-docker run -d -p 21:21 -v /my/data/directory:/home/vsftpd --name vsftpd fauria/vsftpd
+docker run -d -p 21:21 -v /my/data/directory:/home/vsftpd --name vsftpd brakthehack/vsftpd
 # see logs for credentials:
 docker logs vsftpd
 ```
@@ -98,7 +106,7 @@ docker run -d -v /my/data/directory:/home/vsftpd \
 -p 20:20 -p 21:21 -p 21100-21110:21100-21110 \
 -e FTP_USER=myuser -e FTP_PASS=mypass \
 -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
---name vsftpd --restart=always fauria/lap
+--name vsftpd --restart=always brakthehack/lap
 ```
 
 4) Manually add a new FTP user to an existing container:
