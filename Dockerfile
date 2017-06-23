@@ -26,8 +26,6 @@ RUN chmod +x /usr/sbin/run-vsftpd.sh
 
 RUN mkdir -p /var/log/vsftpd # Logs
 
-RUN chown root /etc/vsftpd/vsftpd.conf
-
 EXPOSE 20 21
 
 CMD ["/usr/sbin/run-vsftpd.sh"]

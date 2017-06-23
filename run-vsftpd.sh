@@ -22,16 +22,18 @@ echo "pasv_min_port=${PASV_MIN_PORT}" >> /etc/vsftpd/vsftpd.conf
 # Get log file path
 export LOG_FILE=`grep xferlog_file /etc/vsftpd/vsftpd.conf | cut -d= -f2`
 
-# Create user directories.
+mkdir -p /home/vsftpd
+chown -R ftp:ftp /home/vsftpd
+
 count=0
 while read -r user
 do
   if (( $count % 2 == 0 )); then
-    mkdir -p /home/$user
+    mkdir -p /home/vsftpd/$user
+    chown -R ftp:ftp /home/vsftpd/$user
   fi
   let count++
 done < <(cat /etc/vsftpd/virtual_users)
-
 
 # stdout server info:
 if [ ! $LOG_STDOUT ]; then
