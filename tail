@@ -1,0 +1,14 @@
+#!/bin/bash
+
+log=$1
+
+echo "Waiting for log file $log"
+
+while [ ! -f $log ]
+do
+  sleep 1
+done
+
+echo "Found log file. Listening for FTP updates."
+
+tail -f $log

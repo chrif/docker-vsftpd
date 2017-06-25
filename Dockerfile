@@ -16,15 +16,15 @@ RUN yum install -y \
 ENV PASV_ADDRESS **IPv4**
 ENV PASV_MIN_PORT 21100
 ENV PASV_MAX_PORT 21110
-ENV LOG_STDOUT true
 
 COPY vsftpd.conf /etc/vsftpd/
 COPY vsftpd_virtual /etc/pam.d/
 COPY run-vsftpd.sh /usr/sbin/
+COPY tail /usr/bin/tail-wait
 
 RUN chmod +x /usr/sbin/run-vsftpd.sh
-
-RUN mkdir -p /var/log/vsftpd # Logs
+RUN mkdir -p /var/log/ # Logs
+RUN chmod u+x /usr/bin/tail-wait
 
 EXPOSE 20 21
 
