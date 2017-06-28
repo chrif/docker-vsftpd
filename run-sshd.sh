@@ -9,7 +9,7 @@ prev=
 while read -r user
 do
   if (( $count % 2 == 0 )); then
-    useradd $user -d /home/vsftpd/$user
+    useradd $user -d /home/vsftpd/$user -G ftp
     prev=$user
   else
     echo $user | passwd --stdin $prev

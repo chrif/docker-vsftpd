@@ -30,6 +30,7 @@ do
   if (( $count % 2 == 0 )); then
     mkdir -p /home/vsftpd/$user
     chown -R ftp:ftp /home/vsftpd/$user
+    chmod 770 /home/vsftpd/$user
   fi
   let count++
 done < <(cat /etc/vsftpd/virtual_users)
