@@ -21,6 +21,7 @@ ENV PASV_MAX_PORT 21110
 ENV USE_SFTP **Boolean**
 
 COPY vsftpd.conf /etc/vsftpd/
+COPY sshd_config /etc/ssh/
 COPY vsftpd_virtual /etc/pam.d/
 
 COPY run-vsftpd.sh /usr/sbin/

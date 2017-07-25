@@ -84,5 +84,10 @@ my_password2
 
 
 SFTP
+----
 
 Local users are created with the same credentials as the virtual users. The home directories are mapped to the same directories as the virtual users. Set USE_SFTP to some value to enable the configuration and setup of sftp. If this value is not set, all prior steps will be skipped and the system will default to using virtual users for ftp login.
+
+SFTP can be configured by configuring the appropriate options in the config file supplied in this repo, or a new config file can be mounted docker's `-v` command to overwrite the existing file dynamically.
+
+By default, this implementation restricts chmodding ftp files remotely.
