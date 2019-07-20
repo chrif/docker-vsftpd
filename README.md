@@ -1,6 +1,6 @@
-# brakthehack/vsftpd
+# ckoehler99/vsftpd
 
-Fork of fauria/vsftpd. Offers some better usage in multiuser virtual environments.
+Fork of chrif/docker-vsftpd. Offers some better usage in multiuser virtual environments.
 
 This Docker container implements a vsftpd server, with the following features:
 
