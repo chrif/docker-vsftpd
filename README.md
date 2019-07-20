@@ -10,12 +10,12 @@ This Docker container implements a vsftpd server, with the following features:
  * Passive mode
  * Logging to a file or STDOUT.
 
-### Installation from [Docker registry hub](https://registry.hub.docker.com/u/brakthehack/vsftpd/).
+### Installation from [Docker registry hub](https://hub.docker.com/r/ckoehler99/centos-vsftpd).
 
 You can download the image with the following command:
 
 ```bash
-docker pull brakthehack/vsftpd
+docker pull ckoehler99/centos-vsftpd
 ```
 
 Environment variables
