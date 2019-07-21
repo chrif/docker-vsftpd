@@ -1,9 +1,10 @@
 FROM centos:7
-MAINTAINER Brian Rak <brak@vmware.com>
+MAINTAINER Christian Koehler <ckoehler99.io@gmail.com>
 LABEL Description="vsftpd Docker image based on Centos 7. Supports passive mode, virtual users and sftp." \
 	License="Apache License 2.0" \
 	Usage="See the github repo for examples." \
 	Version="1.0"
+USER root
 
 RUN yum -y update && yum clean all
 RUN yum -y install httpd && yum clean all
@@ -38,5 +39,7 @@ RUN mkdir -p /var/log/ # Logs
 RUN chmod u+x /usr/bin/tail-wait
 
 EXPOSE 20 21 22
+
+USER 1000
 
 ENTRYPOINT ["/usr/sbin/start-services.sh"]
